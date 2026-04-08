@@ -97,8 +97,12 @@ export function SearchResults({ age }: SearchResultsProps) {
   const performSearch = async () => {
     setIsLoading(true);
     try {
-      // Simple adult content check
-      const adultKeywords = ["porn", "adult", "xxx", "sex", "naked", "nude"];
+      // Comprehensive adult content check
+      const adultKeywords = [
+        "porn", "adult", "xxx", "sex", "naked", "nude", "erotic", "hentai", 
+        "nsfw", "camgirl", "escort", "strip", "vagina", "penis", "intercourse",
+        "brazzers", "pornhub", "xvideos", "redtube", "xnxx", "youporn"
+      ];
       const containsAdult = adultKeywords.some(kw => query.toLowerCase().includes(kw));
       
       if (containsAdult && isUnderage) {
@@ -112,7 +116,12 @@ export function SearchResults({ age }: SearchResultsProps) {
 
       // Call Gemini to generate realistic search results
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-      const prompt = `Generate 8 realistic search results for the query: "${query}". 
+      const safetyInstruction = isUnderage 
+        ? "STRICT SAFETY MODE: The user is under 18. Do NOT generate any results related to adult content, violence, or illegal activities. If the query is borderline, provide educational or safe alternatives."
+        : "";
+
+      const prompt = `${safetyInstruction}
+      Generate 8 realistic search results for the query: "${query}". 
       Each result must have:
       - title: A catchy, relevant title.
       - url: A realistic URL (e.g., wikipedia.org, news sites, official sites).
@@ -158,9 +167,13 @@ export function SearchResults({ age }: SearchResultsProps) {
     setIsAiLoading(true);
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      const safetyContext = isUnderage 
+        ? "The user is under 18. You MUST be extremely strict. Do not discuss adult topics, violence, drugs, or anything inappropriate for children. If the query is even slightly inappropriate, refuse to answer and suggest a safe, educational topic."
+        : "If the query is inappropriate or adult-themed, refuse politely.";
+
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
-        contents: `You are Qurexa AI, a helpful search assistant. Provide a concise, accurate answer to the user's query: "${query}". Format with markdown. If the query is inappropriate or adult-themed, refuse politely.`,
+        contents: `You are Qurexa AI, a helpful search assistant. ${safetyContext} Provide a concise, accurate answer to the user's query: "${query}". Format with markdown.`,
       });
       setAiAnswer(response.text || "No answer available.");
     } catch (err) {
