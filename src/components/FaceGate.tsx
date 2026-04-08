@@ -16,23 +16,23 @@ export function FaceGate({ onVerified }: FaceGateProps) {
   const [currentAge, setCurrentAge] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
 
-  const MODEL_URL = "https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights";
+  const MODEL_URL = "https://vladmandic.github.io/face-api/model/";
 
   useEffect(() => {
     const loadModels = async () => {
       try {
         setStatus("loading");
-        await Promise.all([
-          faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-          faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-          faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
-          faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL),
-        ]);
+        // Load models sequentially to avoid connection issues in some environments
+        await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+        await faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL);
+        
         setStatus("ready");
         startVideo();
       } catch (err) {
         console.error("Failed to load models:", err);
-        setError("Failed to load AI models. Please check your internet connection.");
+        setError("Failed to load AI models. This usually happens due to network restrictions or slow connection. You can still proceed in Restricted Mode.");
         setStatus("error");
       }
     };
@@ -141,9 +141,17 @@ export function FaceGate({ onVerified }: FaceGateProps) {
         </div>
 
         {status === "error" ? (
-          <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl mb-6 flex items-start gap-3 text-left">
-            <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-            <p className="text-red-200 text-sm">{error}</p>
+          <div className="space-y-4">
+            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3 text-left">
+              <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+              <p className="text-red-200 text-sm">{error}</p>
+            </div>
+            <button
+              onClick={() => onVerified(17)}
+              className="w-full py-3 px-6 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-medium transition-all"
+            >
+              Continue in Restricted Mode
+            </button>
           </div>
         ) : (
           <button
