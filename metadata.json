@@ -1,0 +1,9 @@
+{
+  "name": "Qurexa",
+  "description": "An AI-powered search engine with face recognition age verification, MSN-style news, and hybrid search capabilities.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

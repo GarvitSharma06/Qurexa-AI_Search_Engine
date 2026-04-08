@@ -1,0 +1,22 @@
+{
+  "totalDocs": 5,
+  "documents": {
+    "1": { "url": "https://en.wikipedia.org/wiki/ChatGPT", "title": "ChatGPT - Wikipedia", "text": "ChatGPT is a chatbot developed by OpenAI and launched on November 30, 2022. It is built on top of OpenAI's GPT-3.5 and GPT-4 families of large language models (LLMs) and has been fine-tuned using both supervised and reinforcement learning techniques." },
+    "2": { "url": "https://en.wikipedia.org/wiki/Nvidia", "title": "Nvidia - Wikipedia", "text": "Nvidia Corporation is an American multinational technology company incorporated in Delaware and based in Santa Clara, California. It is a software and fabless company which designs graphics processing units (GPUs), application programming interfaces (APIs) for data science and high-performance computing, as well as system on a chip units (SoCs) for the mobile computing and automotive market." },
+    "3": { "url": "https://en.wikipedia.org/wiki/Bitcoin", "title": "Bitcoin - Wikipedia", "text": "Bitcoin (BTC) is a decentralized digital currency, without a central bank or single administrator, that can be sent from user to user on the peer-to-peer bitcoin network without the need for intermediaries." },
+    "4": { "url": "https://en.wikipedia.org/wiki/Russo-Ukrainian_War", "title": "Russo-Ukrainian War - Wikipedia", "text": "The Russo-Ukrainian War is an ongoing war between Russia (together with Russian-backed separatist forces) and Ukraine, which began in February 2014." },
+    "5": { "url": "https://en.wikipedia.org/wiki/Grand_Theft_Auto_VI", "title": "Grand Theft Auto VI - Wikipedia", "text": "Grand Theft Auto VI is an upcoming action-adventure game in development by Rockstar Games. It is due to be the eighth main Grand Theft Auto game, following Grand Theft Auto V (2013), and the sixteenth installment overall." }
+  },
+  "invertedIndex": {
+    "chatgpt": [{ "docId": "1", "tfidf": 1.5 }],
+    "openai": [{ "docId": "1", "tfidf": 1.2 }],
+    "nvidia": [{ "docId": "2", "tfidf": 1.5 }],
+    "gpu": [{ "docId": "2", "tfidf": 1.2 }],
+    "bitcoin": [{ "docId": "3", "tfidf": 1.5 }],
+    "crypto": [{ "docId": "3", "tfidf": 1.0 }],
+    "war": [{ "docId": "4", "tfidf": 1.5 }],
+    "ukraine": [{ "docId": "4", "tfidf": 1.2 }],
+    "gta": [{ "docId": "5", "tfidf": 1.5 }],
+    "rockstar": [{ "docId": "5", "tfidf": 1.2 }]
+  }
+}
